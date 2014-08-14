@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Nate Murray"]
   s.email       = ["nate@natemurray.com"]
   s.homepage    = "https://github.com/jashmenn/activeuuid"
-  s.summary     = %q{Add binary UUIDs to ActiveRecord in MySQL}
-  s.description = %q{Add binary (not string) UUIDs to ActiveRecord in MySQL}
+  s.summary     = %q{This version has been modified to support MySQL under JDBC.  See https://github.roving.com/hnewton/activeuuid.}
+  s.description = %q{This version has been modified to support MySQL under JDBC.  See https://github.roving.com/hnewton/activeuuid.}
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
