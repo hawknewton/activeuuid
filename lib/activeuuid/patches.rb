@@ -1,4 +1,5 @@
 require 'active_record'
+require 'active_record/base'
 require 'active_support/concern'
 
 
