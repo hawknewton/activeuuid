@@ -1,5 +1,10 @@
 [![Build Status](https://travis-ci.org/jashmenn/activeuuid.png)](http://travis-ci.org/jashmenn/activeuuid)
 
+
+# THIS VERSION HAS BEEN MODIFED TO SUPPORT MYSQL UNDER JDBC
+
+A PR has been issued upstream here: https://github.com/jashmenn/activeuuid/pull/44
+
 # activeuuid
 
 Add `binary(16)` UUIDs to ActiveRecord.

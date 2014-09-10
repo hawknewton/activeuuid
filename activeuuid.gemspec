@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Nate Murray"]
   s.email       = ["nate@natemurray.com"]
   s.homepage    = "https://github.com/jashmenn/activeuuid"
-  s.summary     = %q{Add binary UUIDs to ActiveRecord in MySQL}
-  s.description = %q{Add binary (not string) UUIDs to ActiveRecord in MySQL}
+  s.summary     = %q{This version has been modified to support MySQL under JDBC.  See https://github.roving.com/hnewton/activeuuid.}
+  s.description = %q{This version has been modified to support MySQL under JDBC.  See https://github.roving.com/hnewton/activeuuid.}
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
@@ -23,9 +23,14 @@ Gem::Specification.new do |s|
   s.add_development_dependency "database_cleaner"
   s.add_development_dependency "forgery"
   s.add_development_dependency "fabrication"
-  s.add_development_dependency "sqlite3"
-  s.add_development_dependency "pg"
-  s.add_development_dependency "mysql2"
+
+  if RUBY_PLATFORM == 'java'
+    s.add_development_dependency "activerecord-jdbcmysql-adapter"
+  else
+    s.add_development_dependency "mysql2"
+    s.add_development_dependency "pg"
+    s.add_development_dependency "sqlite3"
+  end
 
   s.add_runtime_dependency "uuidtools"
   s.add_runtime_dependency "activerecord", '>= 3.1'

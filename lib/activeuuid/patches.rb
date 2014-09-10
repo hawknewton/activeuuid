@@ -1,4 +1,5 @@
 require 'active_record'
+require 'active_record/base'
 require 'active_support/concern'
 
 
@@ -11,6 +12,19 @@ module ActiveUUID
           type = ActiveRecord::Base.connection.adapter_name.downcase == 'postgresql' ? 'uuid' : 'binary(16)'
           column(name, "#{type}#{' PRIMARY KEY' if options.delete(:primary_key)}", options)
         end
+      end
+    end
+
+    module JdbcMySQLSimplifiedType
+      extend ActiveSupport::Concern
+
+      included do
+        def simplified_type_with_mysqljdbc(field_type)
+          return :uuid if field_type == 'binary(16)'
+          simplified_type_without_mysqljdbc(field_type)
+        end
+
+        alias_method_chain :simplified_type, :mysqljdbc
       end
     end
 
@@ -118,6 +132,12 @@ module ActiveUUID
       ActiveRecord::ConnectionAdapters::Mysql2Adapter.send :include, Quoting if defined? ActiveRecord::ConnectionAdapters::Mysql2Adapter
       ActiveRecord::ConnectionAdapters::SQLite3Adapter.send :include, Quoting if defined? ActiveRecord::ConnectionAdapters::SQLite3Adapter
       ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.send :include, PostgreSQLQuoting if defined? ActiveRecord::ConnectionAdapters::PostgreSQLAdapter
+
+      if defined? ActiveRecord::ConnectionAdapters::MysqlAdapter
+        ActiveRecord::ConnectionAdapters::MysqlAdapter.send :include, Quoting
+        ActiveRecord::ConnectionAdapters::MysqlAdapter::Column.send :include, Column
+        ArJdbc::MySQL::Column.send :include, JdbcMySQLSimplifiedType
+      end
     end
   end
 end
